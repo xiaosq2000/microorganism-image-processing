@@ -56,14 +56,14 @@ Segmentation::Segmentation(std::string src_directory, std::string dst_directory)
             // std::cout << entry.path().string() << std::endl;
             img_src = cv::imread(entry.path().string());
             // cv::medianBlur(img_src, img_src, 11);
-            this->imgs_src_.push_back(img_src);
-            this->imgs_src_enhanced_.push_back(img_src);
-            this->imgs_src_gray_.push_back(cv::Mat::zeros(img_src.size(), img_src.type()));
-            this->imgs_pre_segmentation_.push_back(cv::Mat::zeros(img_src.size(), img_src.type()));
-            this->imgs_segmentation_.push_back(cv::Mat::zeros(img_src.size(), img_src.type()));
-            this->imgs_segmentation_0_.push_back(cv::Mat::zeros(img_src.size(), img_src.type()));
-            this->imgs_segmentation_1_.push_back(cv::Mat::zeros(img_src.size(), img_src.type()));
-            this->imgs_filename_.push_back(entry.path().filename().string());
+            this->imgs_src_.emplace_back(img_src);
+            this->imgs_src_enhanced_.emplace_back(img_src);
+            this->imgs_src_gray_.emplace_back(cv::Mat::zeros(img_src.size(), img_src.type()));
+            this->imgs_pre_segmentation_.emplace_back(cv::Mat::zeros(img_src.size(), img_src.type()));
+            this->imgs_segmentation_.emplace_back(cv::Mat::zeros(img_src.size(), img_src.type()));
+            this->imgs_segmentation_0_.emplace_back(cv::Mat::zeros(img_src.size(), img_src.type()));
+            this->imgs_segmentation_1_.emplace_back(cv::Mat::zeros(img_src.size(), img_src.type()));
+            this->imgs_filename_.emplace_back(entry.path().filename().string());
         }
     }
     for (size_t i = 0; i < this->imgs_src_.size(); i++)
@@ -107,6 +107,7 @@ Segmentation::Segmentation(std::string src_directory, std::string dst_directory)
         cv::medianBlur(this->imgs_segmentation_1_[i], this->imgs_segmentation_1_[i], 3);
     }
     std::cout << "Saving dst images to " + this->dst_directory_ << std::endl;
+
     for (size_t i = 0; i < imgs_src_.size(); i++)
     {
         // 保存结果，黑色背景
