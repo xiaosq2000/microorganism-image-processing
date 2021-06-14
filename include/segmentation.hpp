@@ -99,7 +99,7 @@ Segmentation::Segmentation(std::string src_directory, std::string dst_directory)
         cv::subtract(this->imgs_segmentation_[i], this->imgs_segmentation_0_[i], this->imgs_segmentation_1_[i]);
         // 闭运算：修补断裂的菌丝
         cv::morphologyEx(this->imgs_segmentation_1_[i], this->imgs_segmentation_1_[i], cv::MORPH_CLOSE, cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(9, 9), cv::Point(-1, -1)));
-        // 腐蚀：去除噪点
+        // 腐蚀：菌丝变细
         cv::erode(this->imgs_segmentation_1_[i], this->imgs_segmentation_1_[i], cv::Mat::eye(cv::Size(5, 5), CV_8UC1));
         // 开运算：菌丝变细
         cv::morphologyEx(this->imgs_segmentation_1_[i], this->imgs_segmentation_1_[i], cv::MORPH_OPEN, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3), cv::Point(-1, -1)));
